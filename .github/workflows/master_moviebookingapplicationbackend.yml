@@ -1,7 +1,4 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
-
-name: Build and deploy JAR app to Azure Web App - MovieBookingApplicationBackend
+name: Build and Deploy Microservices
 
 on:
   push:
@@ -10,7 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  build-and-deploy-movie-management:
     runs-on: ubuntu-latest
 
     steps:
@@ -21,33 +18,25 @@ jobs:
         with:
           java-version: '11'
 
-      - name: Build with Maven
+      - name: Build MovieManagement with Maven
+        working-directory: MovieManagement  # Replace with the actual directory path
         run: mvn clean install
 
-      - name: Upload artifact for deployment job
+      - name: Upload artifact for deployment
         uses: actions/upload-artifact@v2
         with:
-          name: java-app
-          path: '${{ github.workspace }}/target/*.jar'
+          name: movie-management-jar
+          path: '${{ github.workspace }}/MovieManagement/target/*.jar'
 
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-    environment:
-      name: 'Production'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-    
-    steps:
-      - name: Download artifact from build job
-        uses: actions/download-artifact@v2
-        with:
-          name: java-app
-
-      - name: Deploy to Azure Web App
-        id: deploy-to-webapp
+      - name: Deploy MovieManagement to Azure Web App
+        id: deploy-movie-management-to-webapp
         uses: azure/webapps-deploy@v2
         with:
           app-name: 'MovieBookingApplicationBackend'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_944CDBC77FE14E8E82DC9DE160D563CD }}
-          package: '*.jar'
+          package: Movie-Management/target/*.jar
+
+
+    
+      # Similar steps as above for Eureka microservice
