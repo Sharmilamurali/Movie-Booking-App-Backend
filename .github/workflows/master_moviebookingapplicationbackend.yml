@@ -20,7 +20,7 @@ jobs:
 
       - name: Build MovieManagement with Maven
         working-directory: MovieManagement  # Replace with the actual directory path
-        run: mvn clean install
+        run: mvn package --file pom.xml
 
       - name: Upload artifact for deployment
         uses: actions/upload-artifact@v2
