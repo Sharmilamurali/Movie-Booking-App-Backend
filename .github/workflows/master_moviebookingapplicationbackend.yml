@@ -22,14 +22,15 @@ jobs:
           java-version: '11'
 
       - name: Build with Maven
-        working-directory: ./MovieManagement
         run: mvn clean install
+        working-directory: ./MovieManagement
+       
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
           name: java-app
-          path: '${{ github.workspace }}/target/*.jar'
+          path: '${{ github.workspace }}/MovieManagement/target/*.jar'
 
   deploy:
     runs-on: ubuntu-latest
