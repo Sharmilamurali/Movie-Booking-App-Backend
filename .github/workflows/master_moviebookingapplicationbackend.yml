@@ -22,7 +22,7 @@ jobs:
           java-version: '11'
 
       - name: Build with Maven
-        working-directory: ${{ github.repository }}/MovieManagement
+        working-directory: ./MovieManagement
         run: mvn clean install
 
       - name: Upload artifact for deployment job
