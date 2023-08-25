@@ -50,7 +50,8 @@ jobs:
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_629B8ACA1B944611993647ED4B6985B8 }}
           package: '*.jar'
-          
+---
+name: Build and deploy JAR app to Azure Web App - MovieBookingApplicationBackend          
 on:
   push:
     branches:
